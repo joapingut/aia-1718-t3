@@ -4,6 +4,7 @@ __author__ = 'Joaquin'
 
 
 import clasificadores.perceptron as per
+import clasificadores.generadorConjuntos as Gen
 import datos.votos as Votos
 
 
@@ -11,7 +12,7 @@ print(per.genera_pesos(5))
 
 perceptron = per.Perceptron(Votos.votos_clases)
 
-perceptron.entrena(Votos.votos_entr, Votos.votos_entr_clas, 10000, rate_decay=True)
+perceptron.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
 
 print(perceptron.imprime())
 print(perceptron.evalua(Votos.votos_valid, Votos.votos_valid_clas))
@@ -23,3 +24,6 @@ perceptron.set_Pesos(mejor_votos)
 print(Votos.votos_test[0], Votos.votos_test_clas[0])
 print(perceptron.clasifica(Votos.votos_test[0]))
 print(perceptron.evalua(Votos.votos_valid, Votos.votos_valid_clas))
+
+print(Gen.generar_conjunto_aleatorio(1, 3, 5))
+print(Gen.generar_conjunto_aleatorio(1, 3, 5, clases=('Nay', 'Yay')))
