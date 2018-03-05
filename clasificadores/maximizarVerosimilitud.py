@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import random
+import random, copy
 from clasificadores.clasificador import Clasificador
 import clasificadores.clasificador as clasificador
 
@@ -65,9 +65,29 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
         epoch += 1
     return pesos
 
+
 def ajusta_pesos_estocastico(conjunto, pesos, esperado, rate):
     coef = []
-    coef.append(pesos[0] + rate * (esperado - clasificador.umbral(pesos[0])))
+    coef.append(pesos[0] + rate * (esperado - clasificador.sigma(sum(pesos))))
+    error = esperado - clasificador.sigma(clasificador.calcular_producto_escalar(pesos, conjunto))
     for i in range(0, len(conjunto)):
-        coef.append(pesos[i + 1] + rate * conjunto[i] * (esperado - clasificador.umbral(clasificador.calcular_producto_escalar(pesos, conjunto))))
+        coef.append(pesos[i + 1] + rate * conjunto[i] * error)
+    return coef
+
+
+def ajusta_pesos_batch(conjunto, pesos, resultados, clases, rate):
+    coef = copy.copy(pesos)
+    sigma_cero = clasificador.sigma(sum(pesos))
+    sumatorio_cero = 0
+    for j in range(0, len(conjunto)):
+        objetivo = clasificador.busca_resultado(resultados[j], clases)
+        sumatorio_cero += (objetivo - sigma_cero)
+    coef[0] = coef[0] + rate * sumatorio_cero
+    for i in range(1, len(pesos)):
+        error_global = 0
+        for j in range(0, len(conjunto)):
+            objetivo = clasificador.busca_resultado(resultados[j], clases)
+            error = objetivo - clasificador.sigma(clasificador.calcular_producto_escalar(pesos, conjunto[j]))
+            error_global += error * conjunto[j][i]
+        coef[i] = coef[i] + (rate  * error_global)
     return coef

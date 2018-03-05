@@ -64,7 +64,8 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
 
 def ajusta_pesos(conjunto, pesos, esperado, rate):
     coef = []
-    coef.append(pesos[0] + rate * (esperado - clasificador.umbral(pesos[0])))
+    coef.append(pesos[0] + rate * (esperado - clasificador.umbral(sum(pesos))))
+    error = clasificador.umbral(clasificador.calcular_producto_escalar(pesos, conjunto))
     for i in range(0, len(conjunto)):
-        coef.append(pesos[i + 1] + rate * conjunto[i] * (esperado - clasificador.umbral(clasificador.calcular_producto_escalar(pesos, conjunto))))
+        coef.append(pesos[i + 1] + rate * conjunto[i] * (esperado - error))
     return coef

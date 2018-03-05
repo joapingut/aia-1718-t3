@@ -33,7 +33,7 @@ class ClasificadorNoEntrenado(Exception): pass
 
 def calcular_prediccion(conjunto, pesos, clases, is_sigma=False):
     coef = calcular_producto_escalar(pesos, conjunto)
-    if is_sigma:
+    if not is_sigma:
         result = umbral(coef)
     else:
         result = int(round(sigma(coef)))

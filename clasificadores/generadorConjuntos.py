@@ -16,7 +16,7 @@ def generar_conjunto_aleatorio(rango, dim, tam, separable=True, clases=None):
         atributos = []
         for j in range(0, dim):
             atributos.append(random.randint(-rango, rango))
-        prediccion = Perceptron.calcular_prediccion(atributos, hiperplano, None)
+        prediccion = Clasificador.calcular_prediccion(atributos, hiperplano, None, is_sigma=False)
         conjunto.append(atributos)
         if clases != None:
             soluciones.append(clases[prediccion])
