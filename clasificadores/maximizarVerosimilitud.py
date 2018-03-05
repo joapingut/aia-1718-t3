@@ -2,6 +2,7 @@
 
 import random
 from clasificadores.clasificador import Clasificador
+import clasificadores.clasificador as clasificador
 
 class Maximizar(Clasificador):
 
@@ -43,7 +44,7 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
     pesos = None
     rate = rate_inicial
     if pesos_iniciales == None:
-        pesos = genera_pesos(len(conjunto[0]))
+        pesos = clasificador.genera_pesos(len(conjunto[0]))
     else:
         pesos = pesos_iniciales
     epoch = 0
@@ -54,8 +55,8 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
             prediccion = calcular_prediccion(conjunto[index], pesos, clases)
             if prediccion != resultados[index]:
                 n_errors += 1
-                pesos = ajusta_pesos(conjunto[index], pesos, busca_resultado(resultados[index], clases), rate)
+                pesos = ajusta_pesos(conjunto[index], pesos, clasificador.busca_resultado(resultados[index], clases), rate)
         if rate_decay:
-            rate = decaer_ratio(rate, epoch)
+            rate = clasificador.decaer_ratio(rate, epoch)
         epoch += 1
     return pesos

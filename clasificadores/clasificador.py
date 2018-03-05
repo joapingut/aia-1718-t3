@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import random, copy
+import random, copy, math
 
 '''
 Clasificador es la clase básica que describe un clasificador sobre la que se implementaran el resto de clasificadores.
@@ -51,6 +51,9 @@ def umbral(num):
     if num >= 0:
         return 1
     return 0
+
+def sigma(z):
+    return 1/(1 + math.exp(-z))
 
 '''
     Genera una lista de pesos aleatorios.
