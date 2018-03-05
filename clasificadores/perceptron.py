@@ -21,10 +21,10 @@ class Perceptron(Clasificador):
         None
 
     def clasifica_prob(self, ej):
-        return calcular_prediccion(ej, self.pesos, None)
+        return clasificador.calcular_prediccion(ej, self.pesos, None, is_sigma=False)
 
     def clasifica(self, ej):
-        return calcular_prediccion(ej, self.pesos, self.clases)
+        return clasificador.calcular_prediccion(ej, self.pesos, self.clases, is_sigma=False)
 
     def evalua(self, validacion, resultados):
         exito = 0
@@ -53,7 +53,7 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
     while epoch < n_epochs or n_errors == 0:
         n_errors = 0
         for index in range(0, len(conjunto)):
-            prediccion = calcular_prediccion(conjunto[index], pesos, clases)
+            prediccion = clasificador.calcular_prediccion(conjunto[index], pesos, clases, is_sigma=False)
             if prediccion != resultados[index]:
                 n_errors += 1
                 pesos = ajusta_pesos(conjunto[index], pesos, clasificador.busca_resultado(resultados[index], clases), rate)
@@ -61,13 +61,6 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
             rate = clasificador.decaer_ratio(rate, epoch)
         epoch += 1
     return pesos
-
-def calcular_prediccion(conjunto, pesos, clases):
-    coef = clasificador.calcular_producto_escalar(pesos, conjunto)
-    result = clasificador.umbral(coef)
-    if clases != None:
-        return clases[result]
-    return result
 
 def ajusta_pesos(conjunto, pesos, esperado, rate):
     coef = []

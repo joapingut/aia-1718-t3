@@ -31,6 +31,16 @@ Clase que lanza una excepción. Usada para cuando un clasificador no esta entren
 class ClasificadorNoEntrenado(Exception): pass
 
 
+def calcular_prediccion(conjunto, pesos, clases, is_sigma=False):
+    coef = calcular_producto_escalar(pesos, conjunto)
+    if is_sigma:
+        result = umbral(coef)
+    else:
+        result = int(round(sigma(coef)))
+    if clases != None:
+        return clases[result]
+    return result
+
 def decaer_ratio(rate, epoch):
     return rate + 2/((epoch + 1) **(1/3))
 
