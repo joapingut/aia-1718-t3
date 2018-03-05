@@ -71,7 +71,6 @@ def ajusta_pesos_estocastico(conjunto, pesos, esperado, rate):
     coef.append(pesos[0] + rate * (esperado - clasificador.sigma(sum(pesos))))
     error = esperado - clasificador.sigma(clasificador.calcular_producto_escalar(pesos, conjunto))
     for i in range(0, len(conjunto)):
-<<<<<<< HEAD
         coef.append(pesos[i + 1] + rate * conjunto[i] * error)
     return coef
 
@@ -91,7 +90,4 @@ def ajusta_pesos_batch(conjunto, pesos, resultados, clases, rate):
             error = objetivo - clasificador.sigma(clasificador.calcular_producto_escalar(pesos, conjunto[j]))
             error_global += error * conjunto[j][i]
         coef[i] = coef[i] + (rate  * error_global)
-=======
-        coef.append(pesos[i + 1] + rate * conjunto[i] * (esperado - clasificador.sigma(clasificador.calcular_producto_escalar(pesos, conjunto))))
->>>>>>> 998514d177043413026de0a74e8915089d81e4cd
     return coef
