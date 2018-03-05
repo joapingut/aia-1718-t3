@@ -2,11 +2,8 @@
 
 import random
 from clasificadores.clasificador import Clasificador
-import clasificadores.clasificador as clasificador
 
-__author__ = 'Joaquin'
-
-class Perceptron(Clasificador):
+class Maximizar(Clasificador):
 
     def __init__(self, clases, norm=False):
         self.clases = clases
@@ -41,11 +38,12 @@ class Perceptron(Clasificador):
     def imprime(self):
         return str(self.pesos)
 
+
 def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciales, rate_decay):
     pesos = None
     rate = rate_inicial
     if pesos_iniciales == None:
-        pesos = clasificador.genera_pesos(len(conjunto[0]))
+        pesos = genera_pesos(len(conjunto[0]))
     else:
         pesos = pesos_iniciales
     epoch = 0
@@ -56,22 +54,8 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
             prediccion = calcular_prediccion(conjunto[index], pesos, clases)
             if prediccion != resultados[index]:
                 n_errors += 1
-                pesos = ajusta_pesos(conjunto[index], pesos, clasificador.busca_resultado(resultados[index], clases), rate)
+                pesos = ajusta_pesos(conjunto[index], pesos, busca_resultado(resultados[index], clases), rate)
         if rate_decay:
-            rate = clasificador.decaer_ratio(rate, epoch)
+            rate = decaer_ratio(rate, epoch)
         epoch += 1
     return pesos
-
-def calcular_prediccion(conjunto, pesos, clases):
-    coef = clasificador.calcular_producto_escalar(pesos, conjunto)
-    result = clasificador.umbral(coef)
-    if clases != None:
-        return clases[result]
-    return result
-
-def ajusta_pesos(conjunto, pesos, esperado, rate):
-    coef = []
-    coef.append(pesos[0] + rate * (esperado - clasificador.umbral(pesos[0])))
-    for i in range(0, len(conjunto)):
-        coef.append(pesos[i + 1] + rate * conjunto[i] * (esperado - clasificador.umbral(clasificador.calcular_producto_escalar(pesos, conjunto))))
-    return coef

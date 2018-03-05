@@ -2,13 +2,14 @@
 import copy
 
 import clasificadores.perceptron as Perceptron
+import clasificadores.clasificador as Clasificador
 import random, math
 
 __author__ = 'Joaquin'
 
 
 def generar_conjunto_aleatorio(rango, dim, tam, separable=True, clases=None):
-    hiperplano = Perceptron.genera_pesos(dim)
+    hiperplano = Clasificador.genera_pesos(dim)
     conjunto = []
     soluciones = []
     for i in range(0, tam):
