@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import copy
 from clasificadores.clasificador import Clasificador
 import clasificadores.clasificador as clasificador
 
@@ -40,7 +41,7 @@ class Perceptron(Clasificador):
     def imprime(self):
         return str(self.pesos)
     
-    def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciales, rate_decay, estocastico):
+def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciales, rate_decay, estocastico):
     pesos = None
     rate = rate_inicial
     if pesos_iniciales == None:
