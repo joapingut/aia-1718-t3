@@ -69,5 +69,5 @@ def ajusta_pesos_estocastico(conjunto, pesos, esperado, rate):
     coef = []
     coef.append(pesos[0] + rate * (esperado - clasificador.umbral(pesos[0])))
     for i in range(0, len(conjunto)):
-        coef.append(pesos[i + 1] + rate * conjunto[i] * (esperado - clasificador.umbral(clasificador.calcular_producto_escalar(pesos, conjunto))))
+        coef.append(pesos[i + 1] + rate * conjunto[i] * (esperado - clasificador.sigma(clasificador.calcular_producto_escalar(pesos, conjunto))))
     return coef
