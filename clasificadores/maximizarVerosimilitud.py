@@ -61,7 +61,7 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
         if not estocastico:
             pesos = ajusta_pesos_batch(conjunto, pesos, resultados, clases, rate)
         if rate_decay:
-            rate = clasificador.decaer_ratio(rate, epoch)
+            rate = clasificador.decaer_ratio(rate_inicial, epoch)
         epoch += 1
     return pesos
 

@@ -44,7 +44,9 @@ def calcular_prediccion(conjunto, pesos, clases, is_sigma=False):
     return result
 
 def decaer_ratio(rate, epoch):
-    return rate + 2/(((epoch + 1) ** 2) **(1.0/3.0))
+    #return rate + 2/(((epoch + 1) ** 2) **(1.0/3.0))
+    return rate + 2/(math.pow(epoch + 1, 2/3))
+
 
 def busca_resultado(busco, clases):
     for index in range(0, len(clases)):
@@ -64,7 +66,10 @@ def umbral(num):
     return 0
 
 def sigma(z):
-    return 1/(1 + math.exp(-z))
+    try:
+        return 1/(1 + math.exp(-z))
+    except OverflowError:
+        return 1
 
 '''
     Genera una lista de pesos aleatorios.

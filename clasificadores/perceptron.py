@@ -58,7 +58,7 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
                 n_errors += 1
             pesos = ajusta_pesos(conjunto[index], pesos, clasificador.busca_resultado(resultados[index], clases), rate)
         if rate_decay:
-            rate = clasificador.decaer_ratio(rate, epoch)
+            rate = clasificador.decaer_ratio(rate_inicial, epoch)
         epoch += 1
     return pesos
 

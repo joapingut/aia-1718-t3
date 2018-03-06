@@ -15,7 +15,7 @@ print(Clasificador.genera_pesos(5))
 
 perceptron = per.Perceptron(Votos.votos_clases)
 
-perceptron.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=False)
+perceptron.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
 
 print("Preceptron estocastico: ",perceptron.imprime())
 print("Preceptron estocastico: ",perceptron.evalua(Votos.votos_valid, Votos.votos_valid_clas))
@@ -32,25 +32,25 @@ print(Gen.generar_conjunto_aleatorio(1, 3, 5))
 print(Gen.generar_conjunto_aleatorio(1, 3, 5, clases=('Nay', 'Yay')))
 
 max_esto = maximizar.Maximizar(Votos.votos_clases, estocastico=True)
-max_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=False)
+max_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
 
 print("Maximizar estocastico: ", max_esto.imprime())
 print("Maximizar estocastico: ", max_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
 
 max_batch = maximizar.Maximizar(Votos.votos_clases, estocastico=False)
-max_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=False)
+max_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
 
 print("Maximizar batch: ", max_batch.imprime())
 print("Maximizar batch: ", max_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
 
 regre_esto = regresion.Regresion(Votos.votos_clases, estocastico=True)
-regre_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=False)
+regre_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
 
 print("Regresion estocastico: ", regre_esto.imprime())
 print("Regresion estocastico: ", regre_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
 
 regre_batch = regresion.Regresion(Votos.votos_clases, estocastico=False)
-regre_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=False)
+regre_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
 
 print("Regresion batch: ", regre_batch.imprime())
 print("Regresion batch: ", regre_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
