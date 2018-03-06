@@ -56,7 +56,7 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
             prediccion = clasificador.calcular_prediccion(conjunto[index], pesos, clases, is_sigma=False)
             if prediccion != resultados[index]:
                 n_errors += 1
-                pesos = ajusta_pesos(conjunto[index], pesos, clasificador.busca_resultado(resultados[index], clases), rate)
+            pesos = ajusta_pesos(conjunto[index], pesos, clasificador.busca_resultado(resultados[index], clases), rate)
         if rate_decay:
             rate = clasificador.decaer_ratio(rate, epoch)
         epoch += 1
@@ -64,8 +64,8 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
 
 def ajusta_pesos(conjunto, pesos, esperado, rate):
     coef = []
-    coef.append(pesos[0] + rate * (esperado - clasificador.umbral(sum(pesos))))
     error = clasificador.umbral(clasificador.calcular_producto_escalar(pesos, conjunto))
+    coef.append(pesos[0] + rate * (esperado - error))
     for i in range(0, len(conjunto)):
         coef.append(pesos[i + 1] + rate * conjunto[i] * (esperado - error))
     return coef

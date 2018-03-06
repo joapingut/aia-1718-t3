@@ -36,13 +36,15 @@ def calcular_prediccion(conjunto, pesos, clases, is_sigma=False):
     if not is_sigma:
         result = umbral(coef)
     else:
-        result = int(round(sigma(coef)))
+        result = sigma(coef)
     if clases != None:
+        if is_sigma:
+            result = int(round(result))
         return clases[result]
     return result
 
 def decaer_ratio(rate, epoch):
-    return rate + 2/((epoch + 1) **(1/3))
+    return rate + 2/(((epoch + 1) ** 2) **(1.0/3.0))
 
 def busca_resultado(busco, clases):
     for index in range(0, len(clases)):
@@ -51,11 +53,10 @@ def busca_resultado(busco, clases):
     return None
 
 def calcular_producto_escalar(pesos, atributos):
-    coef = []
-    coef.append(pesos[0])
+    coef = pesos[0]
     for i in range(0, len(atributos)):
-        coef.append(pesos[i + 1] * atributos[i])
-    return sum(coef)
+        coef += pesos[i + 1] * atributos[i]
+    return coef
 
 def umbral(num):
     if num >= 0:

@@ -56,10 +56,10 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
             prediccion = clasificador.calcular_prediccion(conjunto[index], pesos, clases, is_sigma=True)
             if prediccion != resultados[index]:
                 n_errors += 1
-                if estocastico:
-                    pesos = ajusta_pesos_estocastico(conjunto[index], pesos, clasificador.busca_resultado(resultados[index], clases), rate)
+            if estocastico:
+                pesos = ajusta_pesos_estocastico(conjunto[index], pesos, clasificador.busca_resultado(resultados[index], clases), rate)
         if not estocastico:
-                    pesos = ajusta_pesos_batch(conjunto, pesos, resultados, clases, rate)
+            pesos = ajusta_pesos_batch(conjunto, pesos, resultados, clases, rate)
         if rate_decay:
             rate = clasificador.decaer_ratio(rate, epoch)
         epoch += 1
@@ -68,8 +68,8 @@ def entrena(conjunto, resultados, clases, n_epochs, rate_inicial, pesos_iniciale
 
 def ajusta_pesos_estocastico(conjunto, pesos, esperado, rate):
     coef = []
-    coef.append(pesos[0] + rate * (esperado - clasificador.sigma(sum(pesos))))
     error = esperado - clasificador.sigma(clasificador.calcular_producto_escalar(pesos, conjunto))
+    coef.append(pesos[0] + rate * error)
     for i in range(0, len(conjunto)):
         coef.append(pesos[i + 1] + rate * conjunto[i] * error)
     return coef
@@ -77,17 +77,16 @@ def ajusta_pesos_estocastico(conjunto, pesos, esperado, rate):
 
 def ajusta_pesos_batch(conjunto, pesos, resultados, clases, rate):
     coef = copy.copy(pesos)
-    sigma_cero = clasificador.sigma(sum(pesos))
     sumatorio_cero = 0
     for j in range(0, len(conjunto)):
         objetivo = clasificador.busca_resultado(resultados[j], clases)
-        sumatorio_cero += (objetivo - sigma_cero)
+        sumatorio_cero += (objetivo - clasificador.sigma(clasificador.calcular_producto_escalar(pesos, conjunto[j])))
     coef[0] = coef[0] + rate * sumatorio_cero
     for i in range(1, len(pesos)):
         error_global = 0
         for j in range(0, len(conjunto)):
             objetivo = clasificador.busca_resultado(resultados[j], clases)
             error = objetivo - clasificador.sigma(clasificador.calcular_producto_escalar(pesos, conjunto[j]))
-            error_global += error * conjunto[j][i]
+            error_global += error * conjunto[j][i - 1]
         coef[i] = coef[i] + (rate  * error_global)
     return coef
