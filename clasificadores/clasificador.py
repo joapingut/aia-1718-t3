@@ -83,3 +83,11 @@ def genera_pesos(num):
     for i in range(0, num + 1):
         result.append(random.uniform(-1,1))
     return result
+
+def extrae_normalizacion(conjunto):
+    for i in range(0, len(conjunto)):
+        None
+    None
+
+def normalizar(ejemplo, media, desviacion):
+    None
