@@ -13,26 +13,41 @@ class Regresion(Clasificador):
         self.entrenado = False
         self.pesos = None
         self.estocastico = estocastico
+        self.media = None
+        self.desviacion = None
         None
 
     def entrena(self, entr, clas_entr, n_epochs, rate=0.1, pesos_iniciales=None, rate_decay=False):
-        self.pesos = entrena(entr, clas_entr, self.clases, n_epochs, rate, pesos_iniciales, rate_decay, self.estocastico)
+        conjunto = entr
+        if self.normaliza:
+            self.media, self.desviacion = clasificador.extrae_normalizacion(entr)
+            conjunto = clasificador.normalizar(entr, self.media, self.desviacion)
+        self.pesos = entrena(conjunto, clas_entr, self.clases, n_epochs, rate, pesos_iniciales, rate_decay, self.estocastico)
         self.entrenado = True
         None
 
     def clasifica_prob(self, ej):
-        return clasificador.calcular_prediccion(ej, self.pesos, None)
+        conjunto = ej
+        if self.normaliza:
+            conjunto = clasificador.normalizar_elemento(ej, self.media, self.desviacion)
+        return clasificador.calcular_prediccion(conjunto, self.pesos, None, is_sigma=False)
 
     def clasifica(self, ej):
-        return clasificador.calcular_prediccion(ej, self.pesos, self.clases)
+        conjunto = ej
+        if self.normaliza:
+            conjunto = clasificador.normalizar_elemento(ej, self.media, self.desviacion)
+        return clasificador.calcular_prediccion(conjunto, self.pesos, self.clases, is_sigma=False)
 
     def evalua(self, validacion, resultados):
+        conjunto_val = validacion
+        if self.normaliza:
+            conjunto_val = clasificador.normalizar(validacion, self.media, self.desviacion)
         exito = 0
-        for index in range(0, len(validacion)):
-            predicho = self.clasifica(validacion[index])
+        for index in range(0, len(conjunto_val)):
+            predicho = self.clasifica(conjunto_val[index])
             if (resultados[index] == predicho):
                 exito += 1
-        return exito/len(validacion)
+        return exito/len(conjunto_val)
 
     def set_Pesos(self, pesos):
         self.pesos = pesos

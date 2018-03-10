@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import random, copy, math
+import random, copy, math, numpy
 
 '''
 Clasificador es la clase básica que describe un clasificador sobre la que se implementaran el resto de clasificadores.
@@ -85,9 +85,34 @@ def genera_pesos(num):
     return result
 
 def extrae_normalizacion(conjunto):
-    for i in range(0, len(conjunto)):
-        None
-    None
+    mean = []
+    desviacion = []
+    num_attr = len(conjunto[0])
+    nun_arra = numpy.asarray(conjunto)
+    for j in range(0, num_attr):
+        mean.append(numpy.mean(nun_arra[:,j]))
+        desviacion.append(numpy.std(nun_arra[:,j]))
+    return (mean, desviacion)
 
 def normalizar(ejemplo, media, desviacion):
-    None
+    num_attr = len(ejemplo[0])
+    norm_arra = []
+    for i in range(0, len(ejemplo)):
+        n_element = []
+        for j in range(0, num_attr):
+            num = ejemplo[i][j]
+            nnum = puntuacion_estandar(num,media[j],desviacion[j])
+            n_element.append(nnum)
+        norm_arra.append(n_element)
+    return norm_arra
+
+def normalizar_elemento(ejemplo, media, desviacion):
+    norm_arra = []
+    for j in range(0, len(ejemplo)):
+        num = ejemplo[j]
+        nnum = puntuacion_estandar(num,media[j],desviacion[j])
+        norm_arra.append(nnum)
+    return norm_arra
+
+def puntuacion_estandar(num, media, desvia):
+    return (num - media) / desvia
