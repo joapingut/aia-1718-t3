@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 def procesarDigitosEscritos(archivo, limit):
     res = list()
     digit = list()
@@ -23,7 +24,7 @@ def procesarDatos(linea):
         elif char == '+':
             res.append(1)
         elif char == '#':
-            res.append(-1)
+            res.append(1)
     return res
 
 def procesarDigitos(archivo, limit):
@@ -42,23 +43,23 @@ def crearArchivo(dest):
     file = open(dest+"_entr.py",'w', encoding='utf-8')
     
     file.write("digitdata_clases=['0','1','2','3','4','5','6','7','8','9']\n\n")
-    file.write("digitdata_entr="+str(procesarDigitosEscritos("datos/digitdata/trainingimages", 200))+"\n\n")
-    file.write("digitdata_entr_clas="+str(procesarDigitos("datos/digitdata/traininglabels", 200))+"\n\n")
+    file.write("digitdata_entr="+str(procesarDigitosEscritos("datos/digitdata/trainingimages", 2000))+"\n\n")
+    file.write("digitdata_entr_clas="+str(procesarDigitos("datos/digitdata/traininglabels", 2000))+"\n\n")
     
     file.close()
     
     file = open(dest+"_valid.py",'w', encoding='utf-8')
     
     file.write("digitdata_clases=['0','1','2','3','4','5','6','7','8','9']\n\n")
-    file.write("digitdata_valid="+str(procesarDigitosEscritos("datos/digitdata/validationimages", 50))+"\n\n")
-    file.write("digitdata_valid_clas="+str(procesarDigitos("datos/digitdata/validationlabels", 50))+"\n\n")
+    file.write("digitdata_valid="+str(procesarDigitosEscritos("datos/digitdata/validationimages", 500))+"\n\n")
+    file.write("digitdata_valid_clas="+str(procesarDigitos("datos/digitdata/validationlabels", 500))+"\n\n")
     
     file.close()
     
     file = open(dest+"_test.py",'w', encoding='utf-8')
     
     file.write("digitdata_clases=['0','1','2','3','4','5','6','7','8','9']\n\n")
-    file.write("digitdata_test="+str(procesarDigitosEscritos("datos/digitdata/testimages", 50))+"\n\n")
-    file.write("digitdata_test_clas="+str(procesarDigitos("datos/digitdata/testlabels", 50))+"\n\n")
+    file.write("digitdata_test="+str(procesarDigitosEscritos("datos/digitdata/testimages", 500))+"\n\n")
+    file.write("digitdata_test_clas="+str(procesarDigitos("datos/digitdata/testlabels", 500))+"\n\n")
     
     file.close()

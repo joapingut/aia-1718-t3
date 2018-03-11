@@ -18,40 +18,59 @@ import procesamiento as process
 print("Crea ")
 one_vs_rest = onevsrest.One_vs_Rest(digi_entr.digitdata_clases, "perceptron", estocastico=True, norm=False)
 print("entrena")
-one_vs_rest.entrena(digi_entr.digitdata_entr, digi_entr.digitdata_entr_clas, 10, rate=0.1, rate_decay=False)
+one_vs_rest.entrena(digi_entr.digitdata_entr, digi_entr.digitdata_entr_clas, 1, rate=0.1, rate_decay=True)
 print("valida")
 print("One_vs_rest: ", one_vs_rest.evalua(digi_valid.digitdata_valid, digi_valid.digitdata_valid_clas))
+print("One_vs_rest, esperado: ", digi_valid.digitdata_valid_clas[3], " obtenido: ", one_vs_rest.clasifica(digi_valid.digitdata_valid[3]))
+print("One_vs_rest, esperado: ", digi_valid.digitdata_valid_clas[2], " obtenido: ", one_vs_rest.clasifica(digi_valid.digitdata_valid[2]))
+print("One_vs_rest, esperado: ", digi_valid.digitdata_valid_clas[1], " obtenido: ", one_vs_rest.clasifica(digi_valid.digitdata_valid[1]))
+print("One_vs_rest, esperado: ", digi_valid.digitdata_valid_clas[18], " obtenido: ", one_vs_rest.clasifica(digi_valid.digitdata_valid[18]))
+print("One_vs_rest, esperado: ", digi_valid.digitdata_valid_clas[4], " obtenido: ", one_vs_rest.clasifica(digi_valid.digitdata_valid[4]))
+print("One_vs_rest, esperado: ", digi_valid.digitdata_valid_clas[8], " obtenido: ", one_vs_rest.clasifica(digi_valid.digitdata_valid[8]))
+print("One_vs_rest, esperado: ", digi_valid.digitdata_valid_clas[11], " obtenido: ", one_vs_rest.clasifica(digi_valid.digitdata_valid[11]))
 print("One_vs_rest, esperado: ", digi_valid.digitdata_valid_clas[0], " obtenido: ", one_vs_rest.clasifica(digi_valid.digitdata_valid[0]))
+print("One_vs_rest, esperado: ", digi_valid.digitdata_valid_clas[61], " obtenido: ", one_vs_rest.clasifica(digi_valid.digitdata_valid[61]))
+print("One_vs_rest, esperado: ", digi_valid.digitdata_valid_clas[7], " obtenido: ", one_vs_rest.clasifica(digi_valid.digitdata_valid[7]))
 
 normalizar = True
 
 perceptron = per.Perceptron(Votos.votos_clases, norm=normalizar)
 
 perceptron.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
+perceptron.summary.imprime_error()
 
 print("Preceptron estocastico: ",perceptron.imprime())
 print("Preceptron estocastico: ",perceptron.evalua(Votos.votos_valid, Votos.votos_valid_clas))
 
+
 max_esto = maximizar.Maximizar(Votos.votos_clases, norm=normalizar, estocastico=True)
 max_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
+max_esto.summary.imprime_error()
+max_esto.summary.imprime_magnitud()
 
 print("Maximizar estocastico: ", max_esto.imprime())
 print("Maximizar estocastico: ", max_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
 
 max_batch = maximizar.Maximizar(Votos.votos_clases, norm=normalizar, estocastico=False)
-max_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
+max_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=False)
+max_batch.summary.imprime_error()
+max_batch.summary.imprime_magnitud()
 
 print("Maximizar batch: ", max_batch.imprime())
 print("Maximizar batch: ", max_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
 
 regre_esto = regresion.Regresion(Votos.votos_clases, norm=normalizar, estocastico=True)
 regre_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
+regre_esto.summary.imprime_error()
+regre_esto.summary.imprime_magnitud()
 
 print("Regresion estocastico: ", regre_esto.imprime())
 print("Regresion estocastico: ", regre_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
 
 regre_batch = regresion.Regresion(Votos.votos_clases, norm=normalizar, estocastico=False)
 regre_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=True)
+regre_batch.summary.imprime_error()
+regre_batch.summary.imprime_magnitud()
 
 print("Regresion batch: ", regre_batch.imprime())
 print("Regresion batch: ", regre_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))

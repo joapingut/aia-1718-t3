@@ -5,9 +5,21 @@ import clasificadores.perceptron as Perceptron
 import clasificadores.clasificador as Clasificador
 import random, math
 
-__author__ = 'Joaquin'
 
+'''
+Metodo que genera un conjunto aleatorio de ejemplos.
+Los parametros son:
+    rango: rango en el que se mueven los valores de los atributos (numeros enteros)
+    dim: numero de atributos
+    tam: numero de ejemplos que se desean
+    separable: booleano que indica si el conjunto es linealmente separable o no
+    clases: lista que indica el nombre de las clases. Si se pasa None lso atributos seran valores desde 0 al numero de atributos
 
+El resultado del metodo es un lista con 3 elementos
+    indice 0: lista con el valor del hiperplano
+    indice 1: lista con los ejemplos del conjunto
+    indice 2: lista con el resultado esperado para cada elemento del indice 1
+'''
 def generar_conjunto_aleatorio(rango, dim, tam, separable=True, clases=None):
     hiperplano = Clasificador.genera_pesos(dim)
     conjunto = []
@@ -26,9 +38,14 @@ def generar_conjunto_aleatorio(rango, dim, tam, separable=True, clases=None):
         soluciones = altera_soluciones(soluciones, rango)
     return (hiperplano, conjunto, soluciones)
 
-def altera_soluciones(originales, rango):
+'''
+Metodo que dado una lista con las soluciones de los ejemplos altera un  porcentaje de ellos.
+Esto se hace para converir un conjunto linealmente separable en otro que no lo es.
+Los resultados se van escogiendo aleatoriamente.
+'''
+def altera_soluciones(originales, rango, porcentaje=0.2):
     soluciones = copy.copy(originales)
-    percent = math.floor(len(originales) * 0.20)
+    percent = math.floor(len(originales) * porcentaje)
     used = []
     for i in range(0, percent):
         index = random.randint(0, len(originales) -1)
