@@ -14,14 +14,19 @@ Los parametros son:
     tam: numero de ejemplos que se desean
     separable: booleano que indica si el conjunto es linealmente separable o no
     clases: lista que indica el nombre de las clases. Si se pasa None lso atributos seran valores desde 0 al numero de atributos
+    pesos: lista de pesos para generar el hiperplano por si se desea reutilizar una ejecucion anterior
 
 El resultado del metodo es un lista con 3 elementos
     indice 0: lista con el valor del hiperplano
     indice 1: lista con los ejemplos del conjunto
     indice 2: lista con el resultado esperado para cada elemento del indice 1
 '''
-def generar_conjunto_aleatorio(rango, dim, tam, separable=True, clases=None):
-    hiperplano = Clasificador.genera_pesos(dim)
+def generar_conjunto_aleatorio(rango, dim, tam, separable=True, clases=None, pesos=None):
+    hiperplano = None
+    if pesos is None:
+        hiperplano = Clasificador.genera_pesos(dim)
+    else:
+        hiperplano = pesos
     conjunto = []
     soluciones = []
     for i in range(0, tam):

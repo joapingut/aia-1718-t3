@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
-
+'''
+Función que porcesa un archivo con los digitos para crear una lista con ellos.
+    - archivo es la ruta del archivo
+    - limit es el numero maximo de digitos a mirar.
+'''
 def procesarDigitosEscritos(archivo, limit):
     res = list()
     digit = list()
@@ -16,6 +20,12 @@ def procesarDigitosEscritos(archivo, limit):
                 break
     return res
 
+'''
+Función que porcesa un caracter para devolver el valor.
+Si el caracter es un espacio su valor es 0.
+Si el caracter es un + su valor es 1
+Si el caracter es # su valor es 1
+'''
 def procesarDatos(linea):
     res = list()
     for char in linea:
@@ -27,6 +37,10 @@ def procesarDatos(linea):
             res.append(1)
     return res
 
+'''
+Función que procesa el archivo con los resultados de los digitos
+para crear una lista con ellos.
+'''
 def procesarDigitos(archivo, limit):
     res = list()
     file = open(archivo,"r")
@@ -38,6 +52,12 @@ def procesarDigitos(archivo, limit):
             break
     return res
 
+
+'''
+Funcion que genera todos los archivos y los deposita en la ruta de destino.
+La ruta debe tener este formato C:\carpeta1\prefijo
+los archivos estaran en la carpeta1 y todos empezaran por el prefijo indicado.
+'''
 def crearArchivo(dest):
     
     file = open(dest+"_entr.py",'w', encoding='utf-8')

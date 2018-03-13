@@ -36,10 +36,11 @@ class One_vs_Rest():
     def entrena(self, entr, clas_entr, n_epochs, rate=0.1, rate_decay=False):
         clasificadores = []
         for clase in self.clases:
-            print("clase: ", clase)
             clases = ['other', clase]
+            print('Clase ', clase)
             resultados = replace_clases(clase, 'other', clas_entr)
             clasificador = obtiene_clasificador(self.clasificador, clases, self.estocastico, self.normaliza)
+            clasificador.summary = None
             clasificador.entrena(entr, resultados, n_epochs, rate=rate, rate_decay=rate_decay)
             clasificadores.append(clasificador)
         self.entrenado = True
