@@ -2,6 +2,9 @@
 
 __author__ = 'Joaquin'
 
+import procesamiento as process
+
+process.crearArchivo("datos/digidata_p/digidata", limit=500, limit_v=200, limit_t=200)
 
 import clasificadores.perceptron as per
 import clasificadores.maximizarVerosimilitud as maximizar
@@ -14,7 +17,7 @@ import datos.digidata_p.digidata_entr as digi_entr
 import datos.digidata_p.digidata_valid as digi_valid
 import procesamiento as process
 
-#process.crearArchivo("datos/digidata_p/digidata")
+
 print("Crea ")
 one_vs_rest = onevsrest.One_vs_Rest(digi_entr.digitdata_clases, "perceptron", estocastico=True, norm=False)
 print("entrena")

@@ -17,11 +17,12 @@ y en el archivo excel está la puntuación de las diapoitivas.
 Cuando salga el recuadro de una grafica el codigo no continuará hasta que se cierre.
 '''
 
+epochs = 10
 
 print("Creamos el clasificador One VS Rest, versión regresión logistica estocastica sin decaimiento")
 
 one_vs_rest = onevsrest.One_vs_Rest(Entr.digitdata_clases, "regresion", estocastico=True, norm=False)
-one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, 50, rate=0.1, rate_decay=False)
+one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, epochs, rate=0.1, rate_decay=False)
 
 print("Validación: ", one_vs_rest.evalua(Valid.digitdata_valid, Valid.digitdata_valid_clas))
 print("Pruebas: ", one_vs_rest.evalua(Prue.digitdata_test, Prue.digitdata_test_clas))
@@ -39,7 +40,7 @@ print("One_vs_rest, esperado: ", Valid.digitdata_valid_clas[7], " obtenido: ", o
 print("Creamos el clasificador One VS Rest, versión regresión logistica estocastica con decaimiento")
 
 one_vs_rest = onevsrest.One_vs_Rest(Entr.digitdata_clases, "regresion", estocastico=True, norm=False)
-one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, 50, rate=0.1, rate_decay=True)
+one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, epochs, rate=0.1, rate_decay=True)
 
 print("Validación: ", one_vs_rest.evalua(Valid.digitdata_valid, Valid.digitdata_valid_clas))
 print("Pruebas: ", one_vs_rest.evalua(Prue.digitdata_test, Prue.digitdata_test_clas))
@@ -57,7 +58,7 @@ print("One_vs_rest, esperado: ", Valid.digitdata_valid_clas[7], " obtenido: ", o
 print("Creamos el clasificador One VS Rest, versión regresión logistica batch sin decaimiento")
 
 one_vs_rest = onevsrest.One_vs_Rest(Entr.digitdata_clases, "regresion", estocastico=False, norm=False)
-one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, 50, rate=0.1, rate_decay=False)
+one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, epochs, rate=0.1, rate_decay=False)
 
 print("Validación: ", one_vs_rest.evalua(Valid.digitdata_valid, Valid.digitdata_valid_clas))
 print("Pruebas: ", one_vs_rest.evalua(Prue.digitdata_test, Prue.digitdata_test_clas))
@@ -75,7 +76,7 @@ print("One_vs_rest, esperado: ", Valid.digitdata_valid_clas[7], " obtenido: ", o
 print("Creamos el clasificador One VS Rest, versión regresión logistica batch con decaimiento")
 
 one_vs_rest = onevsrest.One_vs_Rest(Entr.digitdata_clases, "regresion", estocastico=False, norm=False)
-one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, 50, rate=0.1, rate_decay=True)
+one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, epochs, rate=0.1, rate_decay=True)
 
 print("Validación: ", one_vs_rest.evalua(Valid.digitdata_valid, Valid.digitdata_valid_clas))
 print("Pruebas: ", one_vs_rest.evalua(Prue.digitdata_test, Prue.digitdata_test_clas))
@@ -94,7 +95,7 @@ print("One_vs_rest, esperado: ", Valid.digitdata_valid_clas[7], " obtenido: ", o
 print("Creamos el clasificador One VS Rest, versión maximizar verosimilitud estocastica sin decaimiento")
 
 one_vs_rest = onevsrest.One_vs_Rest(Entr.digitdata_clases, "verosimilitud", estocastico=True, norm=False)
-one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, 50, rate=0.1, rate_decay=False)
+one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, epochs, rate=0.1, rate_decay=False)
 
 print("Validación: ", one_vs_rest.evalua(Valid.digitdata_valid, Valid.digitdata_valid_clas))
 print("Pruebas: ", one_vs_rest.evalua(Prue.digitdata_test, Prue.digitdata_test_clas))
@@ -112,7 +113,7 @@ print("One_vs_rest, esperado: ", Valid.digitdata_valid_clas[7], " obtenido: ", o
 print("Creamos el clasificador One VS Rest, versión maximizar verosimilitud estocastica con decaimiento")
 
 one_vs_rest = onevsrest.One_vs_Rest(Entr.digitdata_clases, "verosimilitud", estocastico=True, norm=False)
-one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, 50, rate=0.1, rate_decay=True)
+one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, epochs, rate=0.1, rate_decay=True)
 
 print("Validación: ", one_vs_rest.evalua(Valid.digitdata_valid, Valid.digitdata_valid_clas))
 print("Pruebas: ", one_vs_rest.evalua(Prue.digitdata_test, Prue.digitdata_test_clas))
@@ -130,7 +131,7 @@ print("One_vs_rest, esperado: ", Valid.digitdata_valid_clas[7], " obtenido: ", o
 print("Creamos el clasificador One VS Rest, versión maximizar verosimilitud batch sin decaimiento")
 
 one_vs_rest = onevsrest.One_vs_Rest(Entr.digitdata_clases, "verosimilitud", estocastico=False, norm=False)
-one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, 50, rate=0.1, rate_decay=False)
+one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, epochs, rate=0.1, rate_decay=False)
 
 print("Validación: ", one_vs_rest.evalua(Valid.digitdata_valid, Valid.digitdata_valid_clas))
 print("Pruebas: ", one_vs_rest.evalua(Prue.digitdata_test, Prue.digitdata_test_clas))
@@ -148,7 +149,7 @@ print("One_vs_rest, esperado: ", Valid.digitdata_valid_clas[7], " obtenido: ", o
 print("Creamos el clasificador One VS Rest, versión maximizar verosimilitud batch con decaimiento")
 
 one_vs_rest = onevsrest.One_vs_Rest(Entr.digitdata_clases, "verosimilitud", estocastico=False, norm=False)
-one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, 50, rate=0.1, rate_decay=True)
+one_vs_rest.entrena(Entr.digitdata_entr, Entr.digitdata_entr_clas, epochs, rate=0.1, rate_decay=True)
 
 print("Validación: ", one_vs_rest.evalua(Valid.digitdata_valid, Valid.digitdata_valid_clas))
 print("Pruebas: ", one_vs_rest.evalua(Prue.digitdata_test, Prue.digitdata_test_clas))
