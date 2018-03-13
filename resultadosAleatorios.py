@@ -39,11 +39,13 @@ conjunto = generador.generar_conjunto_aleatorio(1, 20, 200, separable=True, clas
 conjunto_test = conjunto[1]
 conjunto_test_class = conjunto[2]
 
-normalizar = False
+print("Pesos ideales: ", conjunto_pesos_ideal)
+
 rate_decay = False
+normalizar = False
 rate = 0.1
 
-print("Pruebas sin normalizacion y sin decaimiento del ratio")
+print("Sin decaimiento del ratio")
 
 perceptron = per.Perceptron(clases, norm=normalizar)
 
@@ -52,180 +54,95 @@ perceptron.summary.imprime_error()
 
 print("Preceptron estocastico: ",perceptron.imprime())
 print("Preceptron estocastico validacion: ",perceptron.evalua(conjunto_validacion, conjunto_validacion_class))
-print("Preceptron estocastico test: ",perceptron.evalua(conjunto_validacion, conjunto_validacion_class))
+print("Preceptron estocastico test: ",perceptron.evalua(conjunto_test, conjunto_test_class))
 
 
-max_esto = maximizar.Maximizar(Votos.votos_clases, norm=normalizar, estocastico=True)
-max_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
+max_esto = maximizar.Maximizar(clases, norm=normalizar, estocastico=True)
+max_esto.entrena(conjunto_entrenamiento, conjunto_entrenamiento_class, 1000, rate_decay=rate_decay)
 max_esto.summary.imprime_error()
 max_esto.summary.imprime_magnitud()
 
 print("Maximizar estocastico: ", max_esto.imprime())
-print("Maximizar estocastico: ", max_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
+print("Maximizar estocastico: ", max_esto.evalua(conjunto_validacion, conjunto_validacion_class))
+print("Maximizar estocastico test: ", max_esto.evalua(conjunto_test, conjunto_test_class))
 
-max_batch = maximizar.Maximizar(Votos.votos_clases, norm=normalizar, estocastico=False)
+max_batch = maximizar.Maximizar(clases, norm=normalizar, estocastico=False)
 max_batch.summary = None
-max_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
+max_batch.entrena(conjunto_entrenamiento, conjunto_entrenamiento_class, 1000, rate_decay=rate_decay)
 #max_batch.summary.imprime_error()
 #max_batch.summary.imprime_magnitud()
 
 print("Maximizar batch: ", max_batch.imprime())
-print("Maximizar batch: ", max_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
+print("Maximizar batch: ", max_batch.evalua(conjunto_validacion, conjunto_validacion_class))
+print("Maximizar estocastico test: ",max_batch.evalua(conjunto_test, conjunto_test_class))
 
-regre_esto = regresion.Regresion(Votos.votos_clases, norm=normalizar, estocastico=True)
-regre_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
+regre_esto = regresion.Regresion(clases, norm=normalizar, estocastico=True)
+regre_esto.entrena(conjunto_entrenamiento, conjunto_entrenamiento_class, 1000, rate_decay=rate_decay)
 regre_esto.summary.imprime_error()
 regre_esto.summary.imprime_magnitud()
 
 print("Regresion estocastico: ", regre_esto.imprime())
-print("Regresion estocastico: ", regre_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
+print("Regresion estocastico: ", regre_esto.evalua(conjunto_validacion, conjunto_validacion_class))
+print("Regresion estocastico test: ",regre_esto.evalua(conjunto_test, conjunto_test_class))
 
-regre_batch = regresion.Regresion(Votos.votos_clases, norm=normalizar, estocastico=False)
-regre_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
+regre_batch = regresion.Regresion(clases, norm=normalizar, estocastico=False)
+regre_batch.entrena(conjunto_entrenamiento, conjunto_entrenamiento_class, 1000, rate_decay=rate_decay)
 regre_batch.summary.imprime_error()
 regre_batch.summary.imprime_magnitud()
 
 print("Regresion batch: ", regre_batch.imprime())
-print("Regresion batch: ", regre_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
+print("Regresion batch: ", regre_batch.evalua(conjunto_validacion, conjunto_validacion_class))
+print("Regresion estocastico test: ",regre_batch.evalua(conjunto_test, conjunto_test_class))
 
 
 normalizar = False
 rate_decay = True
 
-print("Pruebas sin normalizacion y con decaimiento del ratio")
+print("Pruebas con decaimiento del ratio")
 
-perceptron = per.Perceptron(Votos.votos_clases, norm=normalizar)
+perceptron = per.Perceptron(clases, norm=normalizar)
 
-perceptron.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
+perceptron.entrena(conjunto_entrenamiento, conjunto_entrenamiento_class, 1000, rate_decay=rate_decay)
 perceptron.summary.imprime_error()
 
 print("Preceptron estocastico: ",perceptron.imprime())
-print("Preceptron estocastico: ",perceptron.evalua(Votos.votos_valid, Votos.votos_valid_clas))
+print("Preceptron estocastico: ",perceptron.evalua(conjunto_validacion, conjunto_validacion_class))
+print("Preceptron estocastico test: ",perceptron.evalua(conjunto_test, conjunto_test_class))
 
 
-max_esto = maximizar.Maximizar(Votos.votos_clases, norm=normalizar, estocastico=True)
-max_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
+max_esto = maximizar.Maximizar(clases, norm=normalizar, estocastico=True)
+max_esto.entrena(conjunto_entrenamiento, conjunto_entrenamiento_class, 1000, rate_decay=rate_decay)
 max_esto.summary.imprime_error()
 max_esto.summary.imprime_magnitud()
 
 print("Maximizar estocastico: ", max_esto.imprime())
-print("Maximizar estocastico: ", max_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
+print("Maximizar estocastico: ", max_esto.evalua(conjunto_validacion, conjunto_validacion_class))
+print("Maximizar estocastico test: ",max_esto.evalua(conjunto_test, conjunto_test_class))
 
-max_batch = maximizar.Maximizar(Votos.votos_clases, norm=normalizar, estocastico=False)
+max_batch = maximizar.Maximizar(clases, norm=normalizar, estocastico=False)
 max_batch.summary = None
-max_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
+max_batch.entrena(conjunto_entrenamiento, conjunto_entrenamiento_class, 1000, rate_decay=rate_decay)
 #max_batch.summary.imprime_error()
 #max_batch.summary.imprime_magnitud()
 
 print("Maximizar batch: ", max_batch.imprime())
-print("Maximizar batch: ", max_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
+print("Maximizar batch: ", max_batch.evalua(conjunto_validacion, conjunto_validacion_class))
+print("Maximizar estocastico test: ",max_batch.evalua(conjunto_test, conjunto_test_class))
 
-regre_esto = regresion.Regresion(Votos.votos_clases, norm=normalizar, estocastico=True)
-regre_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
+regre_esto = regresion.Regresion(clases, norm=normalizar, estocastico=True)
+regre_esto.entrena(conjunto_entrenamiento, conjunto_entrenamiento_class, 1000, rate_decay=rate_decay)
 regre_esto.summary.imprime_error()
 regre_esto.summary.imprime_magnitud()
 
 print("Regresion estocastico: ", regre_esto.imprime())
-print("Regresion estocastico: ", regre_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
+print("Regresion estocastico: ", regre_esto.evalua(conjunto_validacion, conjunto_validacion_class))
+print("Regresion estocastico test: ",regre_esto.evalua(conjunto_test, conjunto_test_class))
 
-regre_batch = regresion.Regresion(Votos.votos_clases, norm=normalizar, estocastico=False)
-regre_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
+regre_batch = regresion.Regresion(clases, norm=normalizar, estocastico=False)
+regre_batch.entrena(conjunto_entrenamiento, conjunto_entrenamiento_class, 1000, rate_decay=rate_decay)
 regre_batch.summary.imprime_error()
 regre_batch.summary.imprime_magnitud()
 
 print("Regresion batch: ", regre_batch.imprime())
-print("Regresion batch: ", regre_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
-
-normalizar = True
-rate_decay = False
-
-print("Pruebas con normalizacion y sin decaimiento del ratio")
-
-perceptron = per.Perceptron(Votos.votos_clases, norm=normalizar)
-
-perceptron.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
-perceptron.summary.imprime_error()
-
-print("Preceptron estocastico: ",perceptron.imprime())
-print("Preceptron estocastico: ",perceptron.evalua(Votos.votos_valid, Votos.votos_valid_clas))
-
-
-max_esto = maximizar.Maximizar(Votos.votos_clases, norm=normalizar, estocastico=True)
-max_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
-max_esto.summary.imprime_error()
-max_esto.summary.imprime_magnitud()
-
-print("Maximizar estocastico: ", max_esto.imprime())
-print("Maximizar estocastico: ", max_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
-
-max_batch = maximizar.Maximizar(Votos.votos_clases, norm=normalizar, estocastico=False)
-max_batch.summary = None
-max_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
-#max_batch.summary.imprime_error()
-#max_batch.summary.imprime_magnitud()
-
-print("Maximizar batch: ", max_batch.imprime())
-print("Maximizar batch: ", max_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
-
-regre_esto = regresion.Regresion(Votos.votos_clases, norm=normalizar, estocastico=True)
-regre_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
-regre_esto.summary.imprime_error()
-regre_esto.summary.imprime_magnitud()
-
-print("Regresion estocastico: ", regre_esto.imprime())
-print("Regresion estocastico: ", regre_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
-
-regre_batch = regresion.Regresion(Votos.votos_clases, norm=normalizar, estocastico=False)
-regre_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
-regre_batch.summary.imprime_error()
-regre_batch.summary.imprime_magnitud()
-
-print("Regresion batch: ", regre_batch.imprime())
-print("Regresion batch: ", regre_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
-
-normalizar = True
-rate_decay = True
-
-print("Pruebas con normalizacion y con decaimiento del ratio")
-
-perceptron = per.Perceptron(Votos.votos_clases, norm=normalizar)
-
-perceptron.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
-perceptron.summary.imprime_error()
-
-print("Preceptron estocastico: ",perceptron.imprime())
-print("Preceptron estocastico: ",perceptron.evalua(Votos.votos_valid, Votos.votos_valid_clas))
-
-
-max_esto = maximizar.Maximizar(Votos.votos_clases, norm=normalizar, estocastico=True)
-max_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
-max_esto.summary.imprime_error()
-max_esto.summary.imprime_magnitud()
-
-print("Maximizar estocastico: ", max_esto.imprime())
-print("Maximizar estocastico: ", max_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
-
-max_batch = maximizar.Maximizar(Votos.votos_clases, norm=normalizar, estocastico=False)
-max_batch.summary = None
-max_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
-#max_batch.summary.imprime_error()
-#max_batch.summary.imprime_magnitud()
-
-print("Maximizar batch: ", max_batch.imprime())
-print("Maximizar batch: ", max_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
-
-regre_esto = regresion.Regresion(Votos.votos_clases, norm=normalizar, estocastico=True)
-regre_esto.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
-regre_esto.summary.imprime_error()
-regre_esto.summary.imprime_magnitud()
-
-print("Regresion estocastico: ", regre_esto.imprime())
-print("Regresion estocastico: ", regre_esto.evalua(Votos.votos_valid, Votos.votos_valid_clas))
-
-regre_batch = regresion.Regresion(Votos.votos_clases, norm=normalizar, estocastico=False)
-regre_batch.entrena(Votos.votos_entr, Votos.votos_entr_clas, 1000, rate_decay=rate_decay)
-regre_batch.summary.imprime_error()
-regre_batch.summary.imprime_magnitud()
-
-print("Regresion batch: ", regre_batch.imprime())
-print("Regresion batch: ", regre_batch.evalua(Votos.votos_valid, Votos.votos_valid_clas))
+print("Regresion batch: ", regre_batch.evalua(conjunto_validacion, conjunto_validacion_class))
+print("Regresion estocastico test: ",regre_batch.evalua(conjunto_test, conjunto_test_class))
