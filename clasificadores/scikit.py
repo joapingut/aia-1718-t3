@@ -25,24 +25,15 @@ def representacion_grafica(datos,caracteristicas,objetivo,clases,c1,c2):
     plt.legend(clases)
     plt.show()
 
-#notNorm = knn(lbc.data, lbc.target, False)
-#Norm = knn(lbc.data, lbc.target, True)
-#representacion_grafica(notNorm[0], lbc.feature_names, notNorm[2], lbc.target_names, 1, 0)
-#representacion_grafica(Norm[0], lbc.feature_names, Norm[2], lbc.target_names, 1, 0)
-
-'''Se nota una mejoría en el rendimiento de los modelos en Knn cuando
-los datos se normalizan. Se nota un mejor rendimiento con n_neighbors=7
-con respecto a 5 y 9. Normalmente se aprecia un mejor rendimiento con
-pesos uniformes, pero suelen dar el mismo valor de rendimiento en ambos casos.
-'''
-
 '''Función para aplicar el clasificador Knn en el conjunto de datos. Se forman dos conjuntos:
 uno de entrenamiento y otro de test para probar el rendimiento del modelo, esto se realizará
 también en el resto de clasificadores de esta parte. Como parámetros de entrada están los
 ejemplos del conjunto de datos y los valores de clasificación de dichos ejemplos, además de
 un parámetro normalizar que normaliza los datos si entra un True, o no lo hace en caso de
 False. Se aplican dos tipos de Knn dependiendo del valor que se le den a los pesos (por distancia
-(tienen mayor peso los puntos más cercanos) o uniforme).'''
+(tienen mayor peso los puntos más cercanos) o uniforme). Se devuelven los clasificadores
+y los rendimientos en una lista para su posterior manipulación, esto se realiza también
+en el resto de clasificadores.'''
 
 def knn(datos=lbc.data, objetivos=lbc.target, normalizar=True, neighbors=7):
 
@@ -68,6 +59,11 @@ def knn(datos=lbc.data, objetivos=lbc.target, normalizar=True, neighbors=7):
     
     return [knnDistancia, knnUniforme, rendimientoDistancia, rendimientoUniforme]
 
+'''El siguiente clasificador ejecuta los clasificadores de perceptrón, regresión logística
+y vectores soporte dependiendo del valor de entrada loss. Los parámetros que se han considerado
+son los epoch (máximo número de iteraciones), penalty (tipo de regularización), valor de alpha
+en caso de aplicarse dicha regularización, learning_rate (tasa de aprendizaje) y aplicar o no
+dicha tasa.'''
 
 def clasificadorSGD(datos=lbc.data, objetivos=lbc.target,epoch=100,regularizacion=None,alpha=0.01,tasa_aprendizaje=0.0,aplicar_tasa=False):
     tasa = "optimal"
@@ -96,6 +92,11 @@ def clasificadorSGD(datos=lbc.data, objetivos=lbc.target,epoch=100,regularizacio
     
     return [csgdPerceptron, csgdRegresionLogistica, csgdVectoresSoporte, rendimientoPerceptron, rendimientoRegLog, rendimientoVectSop]
     
+'''La siguiente función aplica el clasificador de regresión logística pero sin hacer uso de SGDC,
+los parámetros de entrada que se consideran son los epoch, el tipo de regularización (l1, l2)
+y el valor de C (a mayor C, menor tolerancia a aceptar puntos fuera de la región que separa
+el hiperplano).'''
+
 def regresionLogistica(datos=lbc.data, objetivos=lbc.target,epoch=100,regularizacion="l1",c=0.01):
     
     examples_train, examples_test, classes_train, classes_test = train_test_split(datos, objetivos, test_size = 0.25)
@@ -110,8 +111,10 @@ def regresionLogistica(datos=lbc.data, objetivos=lbc.target,epoch=100,regulariza
     
     return [regresionLogistica,rendimientoRegLog]
     
-'''Para l1 da problemas con ambos posibles valores de loss "hinge" y "hinge_squared",
-así que solo se usa l2.'''    
+'''La siguiente función aplica el clasificador de vectores soporte sin hacer uso de SGDC.
+Los parámetros de entrada que se han considerado son el número de epoch, el valor de C, y
+loss (para aplicar "hinge" o "squared hinge". Para l1 da problemas con ambos posibles 
+valores de loss "hinge" y "hinge_squared", así que solo se usa l2.'''    
     
 def vectoresSoporte(datos=lbc.data, objetivos=lbc.target,epoch=100,c=0.01, loss=False):
     
@@ -130,6 +133,9 @@ def vectoresSoporte(datos=lbc.data, objetivos=lbc.target,epoch=100,c=0.01, loss=
     
     return [vectoresSoporte,rendimientoVectSop]
     
+'''La siguiente función aplica el clasificador de árboles de decisión. Los parámetros que
+se han considerado son el de profundidad del árbol para prepoda, el criterio a aplicar (gini
+o entropia) y ejemplosMin (un nodo es candidato o no dependiendo de la proporción de ejemplos).'''
 
 def arbolesDecision(datos=lbc.data, objetivos=lbc.target, profundidad=None, criterio="gini", ejemplosMin=0.1):
     
@@ -145,6 +151,11 @@ def arbolesDecision(datos=lbc.data, objetivos=lbc.target, profundidad=None, crit
     
     return [arbol, rendimientoArbol]
 
+'''La siguiente función aplica el clasificador de random forest. Los parámetros que
+se han considerado son el de profundidad del árbol para prepoda, bootstrap (coger conjuntos
+de ejemplos más pequeños respecto al grande), el criterio a aplicar (gini o entropia)
+y ejemplosMin (un nodo es candidato o no dependiendo de la proporción de ejemplos).'''
+
 def randomForest(datos=lbc.data, objetivos=lbc.target, profundidad=None, bootstrap=True, criterio="gini", ejemplosMin=2):
     
     examples_train, examples_test, classes_train, classes_test = train_test_split(datos, objetivos, test_size = 0.25)
@@ -158,6 +169,12 @@ def randomForest(datos=lbc.data, objetivos=lbc.target, profundidad=None, bootstr
     print("Random forest:"+str(rendimientoArboles))
     
     return [arboles,rendimientoArboles]
+
+'''Las siguientes funciones son de pruebas para los distintos clasificadores, en las que
+se inicializan los posibles valores de parámetros para cada uno y se recorren en bucles
+escalonados, ejecutando dichos clasificadores y comprobando el rendimiento en cada iteración.
+Finalmente, se devuelven los parámetros usados en la ejecución de mejor rendimiento y el
+rendimiento.'''
 
 def pruebasKnn(datos=lbc.data, objetivos=lbc.target):
     rendDist = 0.0
